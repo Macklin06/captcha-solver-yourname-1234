@@ -1,7 +1,7 @@
 # captcha-solver-yourname-1234
 
 ## Summary
-This repository was auto-generated based on the following brief: "Create a simple calculator with a clean, modern interface that can perform addition, subtraction, multiplication, and division.". It contains a single-page web application.
+This repository was auto-generated based on the following brief: "Create a webpage that looks and is like clone of Google Search homepage". It contains a single-page web application.
 
 ## Setup & Usage
 1.  No setup is required.
