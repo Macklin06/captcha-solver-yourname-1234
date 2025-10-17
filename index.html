@@ -3,30 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Search Clone</title>
+    <title>Netflix Clone</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #ffffff;
-        }
-        .logo {
-            width: 272px;
-            margin: 0 auto;
+        .banner {
+            background-image: url('https://imageurl.com/your-banner-image.jpg');
+            background-size: cover;
+            background-position: center;
         }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center h-screen">
-    <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google" class="logo mb-8">
-    <div class="flex w-full max-w-md mb-4">
-        <input type="text" placeholder="Search Google or type a URL" class="flex-1 p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <button class="bg-blue-500 text-white p-3 rounded-r-lg hover:bg-blue-600">Google Search</button>
-        <button class="bg-gray-200 text-black p-3 rounded-r-lg hover:bg-gray-300">I'm Feeling Lucky</button>
+<body class="bg-gray-900 text-white">
+    <header class="flex items-center justify-between p-4 bg-gray-800">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/63/Netflix_logo.svg" alt="Logo" class="h-10">
+        <div class="space-x-4">
+            <a href="#" class="text-sm hover:text-gray-400">Home</a>
+            <a href="#" class="text-sm hover:text-gray-400">TV Shows</a>
+            <a href="#" class="text-sm hover:text-gray-400">Movies</a>
+            <a href="#" class="text-sm hover:text-gray-400">New & Popular</a>
+            <a href="#" class="text-sm hover:text-gray-400">My List</a>
+        </div>
+    </header>
+
+    <div class="banner h-80 flex items-end p-8">
+        <h1 class="text-5xl font-bold">Watch Movies, TV Shows & More</h1>
     </div>
-    <div class="mt-6 flex flex-col items-center">
-        <div class="text-gray-600 hover:text-gray-800 cursor-pointer">About</div>
-        <div class="text-gray-600 hover:text-gray-800 cursor-pointer">Advertising</div>
-        <div class="text-gray-600 hover:text-gray-800 cursor-pointer">Business</div>
-        <div class="text-gray-600 hover:text-gray-800 cursor-pointer">How Search works</div>
-    </div>
+
+    <section class="p-4">
+        <h2 class="text-2xl font-bold mb-4">Trending Now</h2>
+        <div class="flex space-x-4 overflow-x-scroll">
+            <div class="flex-none w-1/4">
+                <img src="https://imageurl.com/movie1.jpg" class="rounded-lg" alt="Movie 1">
+            </div>
+            <div class="flex-none w-1/4">
+                <img src="https://imageurl.com/movie2.jpg" class="rounded-lg" alt="Movie 2">
+            </div>
+            <div class="flex-none w-1/4">
+                <img src="https://imageurl.com/movie3.jpg" class="rounded-lg" alt="Movie 3">
+            </div>
+            <div class="flex-none w-1/4">
+                <img src="https://imageurl.com/movie4.jpg" class="rounded-lg" alt="Movie 4">
+            </div>
+        </div>
+    </section>
+
+    <section class="p-4">
+        <h2 class="text-2xl font-bold mb-4">Top Picks for You</h2>
+        <div class="flex space-x-4 overflow-x-scroll">
+            <div class="flex-none w-1/4">
+                <img src="https://imageurl.com/movie5.jpg" class="rounded-lg" alt="Movie 5">
+            </div>
+            <div class="flex-none w-1/4">
+                <img src="https://imageurl.com/movie6.jpg" class="rounded-lg" alt="Movie 6">
+            </div>
+            <div class="flex-none w-1/4">
+                <img src="https://imageurl.com/movie7.jpg" class="rounded-lg" alt="Movie 7">
+            </div>
+            <div class="flex-none w-1/4">
+                <img src="https://imageurl.com/movie8.jpg" class="rounded-lg" alt="Movie 8">
+            </div>
+        </div>
+    </section>
 </body>
 </html>
