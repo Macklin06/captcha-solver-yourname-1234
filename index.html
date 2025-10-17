@@ -3,93 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Calculator</title>
+    <title>Google Search Clone</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f7fafc;
+            background-color: #ffffff;
+        }
+        .logo {
+            width: 272px;
+            margin: 0 auto;
         }
     </style>
 </head>
-<body class="flex items-center justify-center h-screen">
-    <div class="bg-white shadow-lg rounded-lg p-8 w-80">
-        <h1 class="text-2xl font-bold text-center mb-4">Calculator</h1>
-        <input id="display" type="text" class="w-full p-2 border border-gray-300 rounded mb-4 text-right text-xl" readonly>
-        <div class="grid grid-cols-4 gap-2">
-            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('7')">7</button>
-            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('8')">8</button>
-            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('9')">9</button>
-            <button class="p-4 bg-red-500 text-white rounded hover:bg-red-600" onclick="setOperation('/')">/</button>
-            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('4')">4</button>
-            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('5')">5</button>
-            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('6')">6</button>
-            <button class="p-4 bg-red-500 text-white rounded hover:bg-red-600" onclick="setOperation('*')">*</button>
-            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('1')">1</button>
-            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('2')">2</button>
-            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('3')">3</button>
-            <button class="p-4 bg-red-500 text-white rounded hover:bg-red-600" onclick="setOperation('-')">-</button>
-            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('0')">0</button>
-            <button class="p-4 bg-green-500 text-white rounded hover:bg-green-600" onclick="calculate()">=</button>
-            <button class="p-4 bg-red-500 text-white rounded hover:bg-red-600" onclick="clearDisplay()">C</button>
-            <button class="p-4 bg-red-500 text-white rounded hover:bg-red-600" onclick="setOperation('+')">+</button>
-        </div>
+<body class="flex flex-col items-center justify-center h-screen">
+    <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google" class="logo mb-8">
+    <div class="flex w-full max-w-md mb-4">
+        <input type="text" placeholder="Search Google or type a URL" class="flex-1 p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <button class="bg-blue-500 text-white p-3 rounded-r-lg hover:bg-blue-600">Google Search</button>
+        <button class="bg-gray-200 text-black p-3 rounded-r-lg hover:bg-gray-300">I'm Feeling Lucky</button>
     </div>
-
-    <script>
-        let currentInput = '';
-        let operation = '';
-        let previousInput = '';
-
-        function appendNumber(number) {
-            currentInput += number;
-            updateDisplay();
-        }
-
-        function setOperation(op) {
-            if (currentInput === '') return;
-            if (previousInput !== '') calculate();
-            operation = op;
-            previousInput = currentInput;
-            currentInput = '';
-        }
-
-        function calculate() {
-            let result;
-            const prev = parseFloat(previousInput);
-            const current = parseFloat(currentInput);
-            if (isNaN(prev) || isNaN(current)) return;
-            switch (operation) {
-                case '+':
-                    result = prev + current;
-                    break;
-                case '-':
-                    result = prev - current;
-                    break;
-                case '*':
-                    result = prev * current;
-                    break;
-                case '/':
-                    result = prev / current;
-                    break;
-                default:
-                    return;
-            }
-            currentInput = result;
-            operation = '';
-            previousInput = '';
-            updateDisplay();
-        }
-
-        function clearDisplay() {
-            currentInput = '';
-            operation = '';
-            previousInput = '';
-            updateDisplay();
-        }
-
-        function updateDisplay() {
-            document.getElementById('display').value = currentInput;
-        }
-    </script>
+    <div class="mt-6 flex flex-col items-center">
+        <div class="text-gray-600 hover:text-gray-800 cursor-pointer">About</div>
+        <div class="text-gray-600 hover:text-gray-800 cursor-pointer">Advertising</div>
+        <div class="text-gray-600 hover:text-gray-800 cursor-pointer">Business</div>
+        <div class="text-gray-600 hover:text-gray-800 cursor-pointer">How Search works</div>
+    </div>
 </body>
 </html>
