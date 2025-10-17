@@ -1,10 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Calculator</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            /* small custom styles for the calculator */
+            .calc-btn { @apply bg-gray-100 hover:bg-gray-200 rounded-lg text-lg p-4 m-1; }
+        </style>
+    </head>
+    <body class="bg-gray-50 min-h-screen flex items-center justify-center">
+        <div class="w-full max-w-md p-6">
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <h1 class="text-2xl font-semibold mb-4 text-center">Calculator</h1>
+                <div id="display" class="bg-gray-100 rounded-lg p-4 text-right text-3xl font-mono mb-4">0</div>
+                <div class="grid grid-cols-4 gap-2">
+                    <button class="calc-btn" data-action="digit">7</button>
+                    <button class="calc-btn" data-action="digit">8</button>
+                    <button class="calc-btn" data-action="digit">9</button>
+                    <button class="calc-btn" data-action="op">/</button>
 
-            <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Error</title></head>
-            <body><h1>LLM Generation Failed</h1><p>Could not generate the application content. Error: OpenAI Responses API failed with status: 401 {
-  "error": {
-    "message": "Your authentication token is not from a valid issuer.",
-    "type": "invalid_request_error",
-    "param": null,
-    "code": "invalid_issuer"
-  }
-}</p></body></html>
+                    <button class="calc-btn" data-action="digit">4</button>
+                    <button class="calc-btn" data-action="digit">5</button>
+                    <button class="calc-btn" data-action="digit">6</button>
+                    <button class="calc-btn" data-action="op">*</button>
+
+                    <button class="calc-btn" data-action="digit">1</button>
+                    <button class="calc-btn" data-action="digit">2</button>
+                    <button class="calc-btn" data-action="digit">3</button>
+                    <button class="calc-btn" data-action="op">-</button>
+
+                    <button class="calc-btn" data-action="digit">0</button>
+                    <button class="calc-btn" data-action="decimal">.</button>
+                    <button class="calc-btn" data-action="equals">=</button>
+                    <button class="calc-btn" data-action="op">+</button>
+                </div>
+                <div class="flex mt-4 justify-between">
+                    <button id="clear" class="px-4 py-2 bg-red-100 rounded">Clear</button>
+                    <button id="back" class="px-4 py-2 bg-yellow-100 rounded">Back</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            (function(){
+                const display = document.getElementById('display');
+                let current = '0';
+                let previous = null;
+                let operator = null;
+
+                function refresh() { display.textContent = current; }
+
+                function inputDigit(d) {
+                    if (current === '0') current = d; else current += d;
+                }
+
+                function inputDecimal() {
+                    if (!current.includes('.')) current += '.';
+                }
+
+                function clearAll() { current = '0'; previous = null; operator = null; }
+
+                function backspace() { if (current.length > 1) current = current.slice(0,-1); else current = '0'; }
+
+                function compute() {
+                    if (operator == null || previous == null) return;
+                    const a = parseFloat(previous);
+                    const b = parseFloat(current);
+                    let res = 0;
+                    switch (operator) {
+                        case '+': res = a + b; break;
+                        case '-': res = a - b; break;
+                        case '*': res = a * b; break;
+                        case '/': res = b === 0 ? 'Error' : a / b; break;
+                    }
+                    current = String(res);
+                    previous = null;
+                    operator = null;
+                }
+
+                document.querySelectorAll('[data-action]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const action = btn.getAttribute('data-action');
+                        const txt = btn.textContent.trim();
+                        if (action === 'digit') inputDigit(txt);
+                        else if (action === 'decimal') inputDecimal();
+                        else if (action === 'op') {
+                            if (operator && previous != null) { compute(); }
+                            operator = txt;
+                            previous = current;
+                            current = '0';
+                        } else if (action === 'equals') { compute(); }
+                        refresh();
+                    });
+                });
+
+                document.getElementById('clear').addEventListener('click', () => { clearAll(); refresh(); });
+                document.getElementById('back').addEventListener('click', () => { backspace(); refresh(); });
+
+                refresh();
+            })();
+        </script>
+    </body>
+</html>
