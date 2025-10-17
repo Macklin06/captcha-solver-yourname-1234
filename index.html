@@ -1,106 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>Calculator</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <style>
-            /* small custom styles for the calculator */
-            .calc-btn { @apply bg-gray-100 hover:bg-gray-200 rounded-lg text-lg p-4 m-1; }
-        </style>
-    </head>
-    <body class="bg-gray-50 min-h-screen flex items-center justify-center">
-        <div class="w-full max-w-md p-6">
-            <div class="bg-white rounded-2xl shadow-lg p-6">
-                <h1 class="text-2xl font-semibold mb-4 text-center">Calculator</h1>
-                <div id="display" class="bg-gray-100 rounded-lg p-4 text-right text-3xl font-mono mb-4">0</div>
-                <div class="grid grid-cols-4 gap-2">
-                    <button class="calc-btn" data-action="digit">7</button>
-                    <button class="calc-btn" data-action="digit">8</button>
-                    <button class="calc-btn" data-action="digit">9</button>
-                    <button class="calc-btn" data-action="op">/</button>
-
-                    <button class="calc-btn" data-action="digit">4</button>
-                    <button class="calc-btn" data-action="digit">5</button>
-                    <button class="calc-btn" data-action="digit">6</button>
-                    <button class="calc-btn" data-action="op">*</button>
-
-                    <button class="calc-btn" data-action="digit">1</button>
-                    <button class="calc-btn" data-action="digit">2</button>
-                    <button class="calc-btn" data-action="digit">3</button>
-                    <button class="calc-btn" data-action="op">-</button>
-
-                    <button class="calc-btn" data-action="digit">0</button>
-                    <button class="calc-btn" data-action="decimal">.</button>
-                    <button class="calc-btn" data-action="equals">=</button>
-                    <button class="calc-btn" data-action="op">+</button>
-                </div>
-                <div class="flex mt-4 justify-between">
-                    <button id="clear" class="px-4 py-2 bg-red-100 rounded">Clear</button>
-                    <button id="back" class="px-4 py-2 bg-yellow-100 rounded">Back</button>
-                </div>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7fafc;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-8 w-80">
+        <h1 class="text-2xl font-bold text-center mb-4">Calculator</h1>
+        <input id="display" type="text" class="w-full p-2 border border-gray-300 rounded mb-4 text-right text-xl" readonly>
+        <div class="grid grid-cols-4 gap-2">
+            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('7')">7</button>
+            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('8')">8</button>
+            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('9')">9</button>
+            <button class="p-4 bg-red-500 text-white rounded hover:bg-red-600" onclick="setOperation('/')">/</button>
+            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('4')">4</button>
+            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('5')">5</button>
+            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('6')">6</button>
+            <button class="p-4 bg-red-500 text-white rounded hover:bg-red-600" onclick="setOperation('*')">*</button>
+            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('1')">1</button>
+            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('2')">2</button>
+            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('3')">3</button>
+            <button class="p-4 bg-red-500 text-white rounded hover:bg-red-600" onclick="setOperation('-')">-</button>
+            <button class="p-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="appendNumber('0')">0</button>
+            <button class="p-4 bg-green-500 text-white rounded hover:bg-green-600" onclick="calculate()">=</button>
+            <button class="p-4 bg-red-500 text-white rounded hover:bg-red-600" onclick="clearDisplay()">C</button>
+            <button class="p-4 bg-red-500 text-white rounded hover:bg-red-600" onclick="setOperation('+')">+</button>
         </div>
+    </div>
 
-        <script>
-            (function(){
-                const display = document.getElementById('display');
-                let current = '0';
-                let previous = null;
-                let operator = null;
+    <script>
+        let currentInput = '';
+        let operation = '';
+        let previousInput = '';
 
-                function refresh() { display.textContent = current; }
+        function appendNumber(number) {
+            currentInput += number;
+            updateDisplay();
+        }
 
-                function inputDigit(d) {
-                    if (current === '0') current = d; else current += d;
-                }
+        function setOperation(op) {
+            if (currentInput === '') return;
+            if (previousInput !== '') calculate();
+            operation = op;
+            previousInput = currentInput;
+            currentInput = '';
+        }
 
-                function inputDecimal() {
-                    if (!current.includes('.')) current += '.';
-                }
+        function calculate() {
+            let result;
+            const prev = parseFloat(previousInput);
+            const current = parseFloat(currentInput);
+            if (isNaN(prev) || isNaN(current)) return;
+            switch (operation) {
+                case '+':
+                    result = prev + current;
+                    break;
+                case '-':
+                    result = prev - current;
+                    break;
+                case '*':
+                    result = prev * current;
+                    break;
+                case '/':
+                    result = prev / current;
+                    break;
+                default:
+                    return;
+            }
+            currentInput = result;
+            operation = '';
+            previousInput = '';
+            updateDisplay();
+        }
 
-                function clearAll() { current = '0'; previous = null; operator = null; }
+        function clearDisplay() {
+            currentInput = '';
+            operation = '';
+            previousInput = '';
+            updateDisplay();
+        }
 
-                function backspace() { if (current.length > 1) current = current.slice(0,-1); else current = '0'; }
-
-                function compute() {
-                    if (operator == null || previous == null) return;
-                    const a = parseFloat(previous);
-                    const b = parseFloat(current);
-                    let res = 0;
-                    switch (operator) {
-                        case '+': res = a + b; break;
-                        case '-': res = a - b; break;
-                        case '*': res = a * b; break;
-                        case '/': res = b === 0 ? 'Error' : a / b; break;
-                    }
-                    current = String(res);
-                    previous = null;
-                    operator = null;
-                }
-
-                document.querySelectorAll('[data-action]').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const action = btn.getAttribute('data-action');
-                        const txt = btn.textContent.trim();
-                        if (action === 'digit') inputDigit(txt);
-                        else if (action === 'decimal') inputDecimal();
-                        else if (action === 'op') {
-                            if (operator && previous != null) { compute(); }
-                            operator = txt;
-                            previous = current;
-                            current = '0';
-                        } else if (action === 'equals') { compute(); }
-                        refresh();
-                    });
-                });
-
-                document.getElementById('clear').addEventListener('click', () => { clearAll(); refresh(); });
-                document.getElementById('back').addEventListener('click', () => { backspace(); refresh(); });
-
-                refresh();
-            })();
-        </script>
-    </body>
+        function updateDisplay() {
+            document.getElementById('display').value = currentInput;
+        }
+    </script>
+</body>
 </html>
